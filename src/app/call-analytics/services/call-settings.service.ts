@@ -9,12 +9,11 @@ import { ApiResponse, CallSettingsDetails } from '../types';
 export class CallSettingsService {
   constructor(private http: HttpClient) {}
 
-  API_ROOT = 'http://127.0.0.1:8000';
+  API_ROOT = 'http://ec2-52-66-17-237.ap-south-1.compute.amazonaws.com:8000';
 
   public getNotificationSettings(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.API_ROOT}/notification-settings`);
   }
-
   public updateNotificationSettings(settings: CallSettingsDetails): Promise<ApiResponse> {
     console.log(settings)
     return firstValueFrom(this.http.post<ApiResponse>(this.API_ROOT + '/notification-settings', settings));

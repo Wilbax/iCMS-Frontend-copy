@@ -17,7 +17,7 @@ export class RecentCallsCardComponent implements OnInit {
   ngOnInit() {
     const documentStyle: CSSStyleDeclaration = getComputedStyle(document.documentElement);
 
-    this.recentCalls = this.callRecordingService.getRecentCalls();
+    // this.recentCalls = this.callRecordingService.getRecentCalls();
 
     this.statusColors = {
       "Positive": documentStyle.getPropertyValue("--positive-color"),

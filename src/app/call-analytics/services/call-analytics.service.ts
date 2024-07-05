@@ -8,7 +8,7 @@ import { firstValueFrom } from "rxjs";
 })
 export class CallAnalyticsService {
 
-  API_ROOT = "http://127.0.0.1:8000";
+  API_ROOT = "http://ec2-52-66-17-237.ap-south-1.compute.amazonaws.com:8000";
 
   constructor(private http: HttpClient) {
   }

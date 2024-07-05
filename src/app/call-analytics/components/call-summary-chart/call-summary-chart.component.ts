@@ -75,7 +75,9 @@ export class CallSummaryChartComponent implements OnInit {
                 callUrl: record.call_recording_url,
                 duration: record.call_duration ?? 4.39,
                 date: new Date(record.call_date),
-                sentiment: record.sentiment
+                sentiment: record.sentiment,
+                keywords : record.keywords,
+                topics: record.topics
               } as CallRecording;
             });
             console.log('Fetched callRecordings:', this.callRecordings);
