@@ -22,6 +22,8 @@ export interface CallRecording {
   callUrl: string;
   transcription: string;
   operator_id: number;
+  topics:any;
+  keywords:any
 }
 
 export interface OperatorAnalyticsOverTimeRecord {
