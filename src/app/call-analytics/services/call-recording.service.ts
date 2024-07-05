@@ -18,7 +18,7 @@ export class CallRecordingService {
   constructor(private http: HttpClient) {
   }
 
-  //API_ROOT = "http://127.0.0.1:8000";
+  // API_ROOT = "http://127.0.0.1:8000";
   API_ROOT = "http://ec2-52-66-17-237.ap-south-1.compute.amazonaws.com:8000";
 
   public uploadFiles(files: QueuedFile[]): Promise<ApiResponse|undefined> {

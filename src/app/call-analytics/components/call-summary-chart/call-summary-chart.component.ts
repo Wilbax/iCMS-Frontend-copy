@@ -68,6 +68,7 @@ export class CallSummaryChartComponent implements OnInit {
           } else {
             this.noData = false;
             this.callRecordings = data.data.map((record: any) => {
+              console.log(record)
               return {
                 id: record.id,
                 description: record.description,
