@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, Observable } from 'rxjs';
 import { ApiResponse, CallSettingsDetails } from '../types';
+import { environment } from "../../../environment/environment";
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { ApiResponse, CallSettingsDetails } from '../types';
 export class CallSettingsService {
   constructor(private http: HttpClient) {}
 
-  API_ROOT = 'http://ec2-52-66-17-237.ap-south-1.compute.amazonaws.com:8000';
+  API_ROOT = environment.callAnalyzerAPI;
 
   public getNotificationSettings(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.API_ROOT}/notification-settings`);

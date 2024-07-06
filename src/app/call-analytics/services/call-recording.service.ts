@@ -3,6 +3,7 @@ import { ApiResponse, CallRecording, QueuedFile } from '../types';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {firstValueFrom, Observable, tap} from 'rxjs';
 import { Header } from 'primeng/api';
+import { environment } from "../../../environment/environment";
 
 interface Topic {
   name: string;
@@ -18,8 +19,7 @@ export class CallRecordingService {
   constructor(private http: HttpClient) {
   }
 
-  // API_ROOT = "http://127.0.0.1:8000";
-  API_ROOT = "http://ec2-52-66-17-237.ap-south-1.compute.amazonaws.com:8000";
+  API_ROOT = environment.callAnalyzerAPI;
 
   public uploadFiles(files: QueuedFile[]): Promise<ApiResponse|undefined> {
     const formData: FormData = new FormData();

@@ -1,9 +1,10 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from "@angular/core";
-import { TokenStorageService } from "../shared-services/token-storage.service";
+import { AuthenticationService } from "../../auth/services/authentication.service";
+import { switchMap } from "rxjs/operators";
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  const tokenStorageService = inject(TokenStorageService);
+  const authService = inject(AuthenticationService);
   const URLS_TO_EXCLUDE = [
     "api.ipify.org",
     "3.7.55.235:8000"
@@ -15,12 +16,15 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
     }
   }
 
-  const idToken = tokenStorageService.getStorageKeyValue('idToken');
-  console.log('idToken:', idToken)
-  const  cloned = req.clone({
-    setHeaders: {
-      Authorization: `Bearer ${idToken}`
-    }
-  });
-  return next(cloned);
+  return authService.getIdToken().pipe(
+    switchMap(token => {
+      console.log('idToken:', token);
+      const cloned = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      return next(cloned);
+    })
+  );
 };
