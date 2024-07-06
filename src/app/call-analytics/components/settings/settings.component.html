@@ -43,7 +43,7 @@
 
               <div class="w-full p-fluid">
                 <p>Special Keywords To Send Notifications</p>
-                <p-chips formControlName="keywords" [disabled]="!notificationsSettingsForm.get('enableKeywordsNotification')?.value"/>
+                <p-chips formControlName="keywords" [disabled]="!notificationsSettingsForm.get('enableKeywordsNotification')?.value || getIsDisabled()"/>
               </div>
 
             </div>
@@ -71,7 +71,7 @@
               </div>
               <div class="w-full p-fluid mb-5">
                 <p>Email Notifications Receivers</p>
-                <p-chips formControlName="emails" [disabled]="!notificationsSettingsForm.get('enableEmailNotification')?.value"/>
+                <p-chips formControlName="emails" [disabled]="!notificationsSettingsForm.get('enableEmailNotification')?.value || getIsDisabled"/>
               </div>
             </div>
           </div>
