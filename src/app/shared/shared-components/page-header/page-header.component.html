@@ -3,13 +3,17 @@
     <h2 class="font-bold mb-2">{{ pageTitle }}</h2>
     <p-breadcrumb class="max-w-full" [model]="breadcrumbItems" [home]="home"></p-breadcrumb>
   </div>
-  <!--  <div class="flex items-right w-fit" *ngIf="showDatePicker">-->
-  <!--    <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" [showIcon]="true" class="z-10"></p-calendar>-->
-  <!--  </div>-->
+<!--  <div class="flex items-right w-fit" *ngIf="showDatePicker">-->
+<!--    <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" [showIcon]="true" class="z-10"></p-calendar>-->
+<!--  </div>-->
 
-  <div class="w-fit" *ngIf="showButton">
-    <p-button [outlined]="false" (click)="onClickActionButton()">{{ buttonText }}</p-button>
-  </div>
+  @if (showButton) {
+    @if ((buttonText.includes("Operator") && isAbleToAddOperator) || (buttonText.includes("Recording") && isAbleToAddCall)) {
+      <div class="w-fit">
+        <p-button [outlined]="false" (click)="onClickActionButton()">{{ buttonText }}</p-button>
+      </div>
+    }
+  }
 
   <div class="w-fit ms-auto pe-5 pt-1" *ngIf="showDatePicker">
     <p-calendar
@@ -23,6 +27,16 @@
     </p-calendar>
 
     <p-calendar
+    [(ngModel)]="rangeDates"
+    selectionMode="range"
+    [readonlyInput]="true"
+    [showIcon]="true"
+    class="z-10"
+    (ngModelChange)="onDateRangeChangeNotifications()"
+     *ngIf="mainDashboardNotification">
+  </p-calendar>
+
+    <p-calendar
       [(ngModel)]="rangeDates"
       selectionMode="range"
       [readonlyInput]="true"
@@ -30,7 +44,7 @@
       class="z-10"
       (ngModelChange)="onRangeDateChange($event)"
       [minDate]="minDate"
-      [maxDate]="maxDate" *ngIf="!mainDashboardDate && !callDashboardDate;">
+      [maxDate]="maxDate" *ngIf="!mainDashboardDate && !callDashboardDate &&!mainDashboardNotification">
     </p-calendar>
 
     <p-calendar
@@ -40,7 +54,7 @@
       [showIcon]="true"
       [showButtonBar]="true"
       (ngModelChange)="onRangeSelect($event)"
-      *ngIf="callDashboardDate">
+      *ngIf="callDashboardDate">   <-- Check if hide or show
     </p-calendar>
   </div>
 
@@ -57,7 +71,6 @@
   <ng-container ngIf="showAddRoleButton">
     <app-right-sidebar [showAddRoleButton]="showAddRoleButton"></app-right-sidebar>
   </ng-container> -->
-
 
 </div>
 <p-divider></p-divider>

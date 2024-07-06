@@ -1,7 +1,9 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Message } from 'primeng/api';
 import {NotificationService} from "../../../services/notification.service"
 import { Subscription } from 'rxjs';
+import { DateRangeService } from '../../../services/shared-date-range/date-range.service';
+import { AuthenticationService } from '../../../../auth/services/authentication.service';
 
 @Component({
   selector: 'app-unread-notifications',
@@ -27,10 +29,13 @@ export class UnreadNotificationsComponent implements OnInit {
   emptyUnread:boolean=true;
   refreshTime:number = 1000;
 
-  
+
   private socketSubscription: Subscription | undefined;
 
-  constructor(private notificationService: NotificationService)
+  constructor(private notificationService: NotificationService,
+    private dateRangeService:DateRangeService,
+    private authService: AuthenticationService
+  )
   {}
 
   ngOnInit(): void {
@@ -43,6 +48,25 @@ export class UnreadNotificationsComponent implements OnInit {
       }
     );
 
+    
+  this.dateRangeService.currentDateRange.subscribe(range => {
+    if (range && range.length > 0) {
+      const startDate = new Date(range[0]);
+      let endDate = new Date(range[0]);
+
+      if (range[1]) {
+        endDate = new Date(range[1]);
+      }
+      this.filteredNotifications = this.notifications.filter(notification => {
+        console.log(notification.summary);
+        const notificationDate = new Date(notification.summary || '');
+        // Include the end date in the range
+        return notificationDate >= startDate && notificationDate <= endDate;
+      });
+    } else {
+      this.filteredNotifications = this.notifications;
+    }
+  });
   }
 
   addMessages(){
@@ -54,11 +78,13 @@ export class UnreadNotificationsComponent implements OnInit {
     this.notifications = [];
     this.readNotifications= [];
     this.filteredNotifications=[];
-    this.notificationService.updateUnreadNotifications(existingNotificationDicts).subscribe(
+    this.authService.getIdToken().subscribe((token) =>{
+    this.notificationService.updateUnreadNotifications(token,existingNotificationDicts).subscribe(
       (response) => {
-        
+
       },
   );
+});
   }
 
   ignoreMessages(notificationID:any){
@@ -69,10 +95,12 @@ export class UnreadNotificationsComponent implements OnInit {
       this.notificationCount = this.notifications.length;
     }
 
-    this.notificationService.updateUnreadNotifications([{ id: notificationID }]).subscribe(
+    this.authService.getIdToken().subscribe((token) =>{
+    this.notificationService.updateUnreadNotifications(token,[{ id: notificationID }]).subscribe(
       (response) => {
       },
   );
+});
 
   }
 
@@ -80,14 +108,15 @@ export class UnreadNotificationsComponent implements OnInit {
     this.visible=true;
     this.showData=[notification['summary'],notification['data'],notification['detail']];
   }
-  
+
   dateReset(){
     this.rangeDates=[];
     this.onDateRangeChange();
   }
 
   fetchNotifications() {
-    this.notificationService.getNotifications().subscribe(
+    this.authService.getIdToken().subscribe((token) =>{
+    this.notificationService.getNotifications(token).subscribe(
       (newNotifications) => {
 
         if(newNotifications.length!==0){
@@ -105,11 +134,10 @@ export class UnreadNotificationsComponent implements OnInit {
               // If the notification doesn't exist, add it to the list
               const newMessage: Message = {
                 severity: "info",
-                summary: newNotification.created_at,
-                detail: newNotification.alert,
-                id: newNotification.id ,// Assuming id is a unique identifier for notifications,
-                data:newNotification.email,
-                
+                summary: newNotification.datetime,
+            detail: `${newNotification.sources} : ${newNotification.title}`,
+            id: newNotification.id,
+            data: newNotification.description
               };
               this.notifications.push(newMessage);
             }
@@ -129,6 +157,8 @@ export class UnreadNotificationsComponent implements OnInit {
 
       }
     );
+  });
+
   }
 
 
@@ -136,11 +166,11 @@ export class UnreadNotificationsComponent implements OnInit {
     if (this.rangeDates && this.rangeDates.length > 0) {
       const startDate = new Date(this.rangeDates[0]);
       let endDate = new Date(this.rangeDates[0]);
-  
+
       if (this.rangeDates[1]) {
         endDate = new Date(this.rangeDates[1]);
       }
-  
+
       this.filteredNotifications = this.notifications.filter(notification => {
         console.log(notification.summary);
         const notificationDate = new Date(notification.summary || '');
@@ -151,5 +181,5 @@ export class UnreadNotificationsComponent implements OnInit {
       this.filteredNotifications = this.notifications;
     }
   }
- 
+
 }

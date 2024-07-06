@@ -1,9 +1,10 @@
 <p-sidebar position="right" [(visible)]="sidebarVisible">
 
-  <ng-template pTemplate="header" class="justify-content-center">
-    <span class="title"><h3>New Role</h3></span>
-
+  <ng-template  pTemplate="header" class="justify-content-center">
+    <span *ngIf="!isRoleUpdate" class="title"><h3>New Role</h3></span>
+    <span *ngIf="isRoleUpdate" class="title"><h3>Update Role</h3></span>
   </ng-template>
+
 
   <ng-template pTemplate="content">
     <p-divider></p-divider>
@@ -31,21 +32,21 @@
       </div>
     </div>
 
-    <div class="chart-type mt-2 pt-5">
-      <span>Users</span>
-    </div>
+<!--    <div class="chart-type mt-2 pt-5">-->
+<!--      <span>Users</span>-->
+<!--    </div>-->
 
-    <div class="card flex justify-content-center pt-5">
-    <p-multiSelect
-        (onClick)="getUsers()"
-        [options]="users"
-        [(ngModel)]="selectedUsers"
-        placeholder="Select Users"
-        optionLabel="user_name"
-        display="chip"
-        [showClear]="true"
-        />
-    </div>
+<!--    <div class="card flex justify-content-center pt-5">-->
+<!--    <p-multiSelect-->
+<!--        (onClick)="getUsers()"-->
+<!--        [options]="users"-->
+<!--        [(ngModel)]="selectedUsers"-->
+<!--        placeholder="Select Users"-->
+<!--        optionLabel="user_name"-->
+<!--        display="chip"-->
+<!--        [showClear]="true"-->
+<!--        />-->
+<!--    </div>-->
 
 
 

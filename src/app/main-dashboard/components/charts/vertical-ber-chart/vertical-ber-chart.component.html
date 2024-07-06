@@ -2,8 +2,8 @@
 <div class="chart-header-container">
 
     <p class="chart-title">{{ title }}</p>
-      <p *ngIf="selectedDateRange && selectedDateRange.length === 2 && selectedDateRange[0] && selectedDateRange[1]">{{ selectedDateRange[0]}} - {{ selectedDateRange[1]}}</p>
-      <p *ngIf="Date">{{ Date}}</p>
+<!--      <p *ngIf="selectedDateRange && selectedDateRange.length === 2 && selectedDateRange[0] && selectedDateRange[1]">{{ selectedDateRange[0]}} - {{ selectedDateRange[1]}}</p>-->
+<!--      <p *ngIf="Date">{{ Date}}</p>-->
       <div class="card">
         <p-menubar [model]="items" />
       </div>
@@ -15,16 +15,44 @@
 </div>
   <p-chart type="bar" [data]="data" [options]="options"></p-chart>
 
-<!--  <div *ngIf="categories.length > 1">-->
-<!--    <div *ngFor="let category of categories" class="field-checkbox flex align-items-center">-->
-<!--      <p-checkbox-->
-<!--          [(ngModel)]="selectedCategories"-->
-<!--          [label]="category"-->
-<!--          name="group"-->
-<!--          [value]="category"-->
-<!--          (ngModelChange)="onSourceChange(category)"/>-->
-<!--    </div>-->
-<!--  </div>-->
+  <div *ngIf="categories.length > 1 && edit==true">
+    <div *ngFor="let category of categories" class="field-checkbox flex align-items-center">
+     <p-checkbox
+        [(ngModel)]="selectedCategories"
+       [label]="category"
+        name="group"
+       [value]="category"
+        (ngModelChange)="onSourceChange(category)"/>
+     </div>
+     <div class="field-checkbox flex align-items-center">
+     <!-- <button pButton type="button" label="Done" (click)="editOff()" ></button> -->
+   <!-- </div>
+  </div>
+
+  <div *ngIf="edit==true">
+    <div class="pt-5">
+      <span>
+        <p-inputNumber 
+    [(ngModel)]="positiveMin" 
+    [showButtons]="true" 
+    inputId="stacked" 
+    mode="currency" 
+    currency="USD" />
+
+<p-inputNumber 
+    [(ngModel)]="positiveMax" 
+    mode="decimal" 
+    [showButtons]="true" 
+    inputId="minmax-buttons" 
+    [min]="0" 
+    [max]="100" /> 
+
+      </span>
+    </div>
+    <div> -->
+     <button pButton type="button" label="Done" (click)="editOff()" ></button>
+   </div>
+  </div>
 
 <!--  <p *ngIf="selectedDateRange && selectedDateRange.length === 2 && selectedDateRange[0] && selectedDateRange[1]">{{ selectedDateRange[0]}} - {{ selectedDateRange[1]}}</p>-->
 <!--  <p *ngIf="Date">{{ Date}}</p>-->

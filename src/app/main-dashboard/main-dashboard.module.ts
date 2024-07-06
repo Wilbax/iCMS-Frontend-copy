@@ -49,7 +49,9 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { TableModule } from 'primeng/table';
 import {PanelMenuModule} from "primeng/panelmenu";
 import {MenubarModule} from "primeng/menubar";
-
+import {SkeletonModule} from "primeng/skeleton";
+import {RippleModule} from "primeng/ripple";
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [
@@ -62,13 +64,13 @@ import {MenubarModule} from "primeng/menubar";
     UserSecurityComponent,
     NotificationsComponent,
     UnreadNotificationsComponent,
-    ReadNotificationsComponent,
     HorizontalBarChartComponent,
     GaugeChartComponent,
     GridComponent,
     WordcloudComponent,
     VerticalBerChartComponent,
-    BarChartComponent
+    BarChartComponent,
+    ReadNotificationsComponent
 
   ],
   imports: [
@@ -107,6 +109,9 @@ import {MenubarModule} from "primeng/menubar";
     TableModule,
     PanelMenuModule,
     MenubarModule,
+    SkeletonModule,
+    RippleModule,
+    InputNumberModule,
 
   ],
   exports: [

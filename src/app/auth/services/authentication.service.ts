@@ -1,4 +1,3 @@
-// authentication.service.ts
 import { Injectable } from '@angular/core';
 import { CognitoUser, AuthenticationDetails, CognitoUserSession, CognitoUserPool } from 'amazon-cognito-identity-js';
 import { environment } from "../../../environment/environment";
@@ -7,6 +6,7 @@ import { Router } from "@angular/router";
 import { MessageService } from "primeng/api";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { apiEndpoint } from "../../app-settings/config";
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -39,10 +39,17 @@ export class AuthenticationService {
   }
 
   signIn(username: string, password: string): Observable<any> {
-    const authenticationDetails = new AuthenticationDetails({ Username: username, Password: password });
-    const cognitoUser = new CognitoUser({ Username: username, Pool: this.userPool });
+  const getIp$ = this.http.get('https://api.ipify.org/?format=json', { responseType: 'text' });
+    console.log('getIp$', getIp$);
+    const authenticateUser$ = (ip: any) => new Observable(observer => {
+      const authenticationDetails = new AuthenticationDetails({
+        Username: username,
+        Password: password,
+        ClientMetadata: { ip }
+      });
+      console.log(ip)
+      const cognitoUser = new CognitoUser({ Username: username, Pool: this.userPool });
 
-    return new Observable(observer => {
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: (session: any) => {
           this.loadPermissions();
@@ -62,24 +69,21 @@ export class AuthenticationService {
         }
       });
     });
+
+    return getIp$.pipe(
+      switchMap(data => authenticateUser$(data))
+    );
   }
 
   loadPermissions() {
-    this.getIdToken().subscribe(
-      token => {
-        this.getUserPermissions(token).subscribe(
-          permissions => {
-            this.permissionsSubject.next(permissions);
-            this.setPermissions(permissions);
-          },
-          error => {
-            console.error('Error fetching permissions', error);
-          }
-        );
+    this.getIdToken().pipe(
+      switchMap(token => this.getUserPermissions(token))
+    ).subscribe(
+      permissions => {
+        this.permissionsSubject.next(permissions);
+        this.setPermissions(permissions);
       },
-      error => {
-        console.error('Error fetching ID token', error);
-      }
+      error => console.error('Error fetching permissions', error)
     );
   }
 
@@ -122,6 +126,35 @@ export class AuthenticationService {
     });
   }
 
+  getAccessToken(): Observable<string> {
+    return new Observable(observer => {
+      const currentUser = this.userPool.getCurrentUser();
+      if (currentUser) {
+        currentUser.getSession((err: any, session: CognitoUserSession) => {
+          if (err) {
+            observer.error(err);
+            this.router.navigate(['/auth/signin']).then(() => {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Sign in error. Please sign in again.' });
+            });
+          } else if (session.isValid()) {
+            observer.next(session.getAccessToken().getJwtToken());
+            observer.complete();
+          } else {
+            observer.error('Session expired. Please sign in again.');
+            this.router.navigate(['/auth/signin']).then(() => {
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Session expired. Please sign in again.' });
+            });
+          }
+        });
+      } else {
+        observer.error('No user found');
+        this.router.navigate(['/auth/signin']).then(() => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Session expired. Please sign in again.' });
+        });
+      }
+    });
+  }
+
   getLastAuthUser(): CognitoUser | null {
     return this.userPool.getCurrentUser();
   }
@@ -134,15 +167,10 @@ export class AuthenticationService {
       this.currentUserSubject.next(null);
     }
   }
+
   setPermissions(data: any) {
     let user = this.getLastAuthUser();
     //save permissions to local storage with related to user
     localStorage.setItem(user?.getUsername() + '-permissions', JSON.stringify(data));
   }
 }
-
-
-
-
-
-

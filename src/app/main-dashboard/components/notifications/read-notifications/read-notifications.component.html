@@ -1,34 +1,36 @@
 
 <!-- <div>
-       <p-messages [(value)]="readnotifications" [enableService]="true" [closable]="true">{{readnotifications[0].severity}}</p-messages>
+       <p-messages [(value)]="readnotifications" [enableService]="true" [closable]="true">{{read notifications[0].severity}}</p-messages>
 </div> -->
 
-              <!-- &lt;!&ndash; <div *ngFor="let notificationArray of Readnotifications"> (click)="showDialog(notificationArray[0])">
+              <!-- &lt;!&ndash; <div *ngFor="let notificationArray of Read notifications"> (click)="showDialog(notificationArray[0])">
                <p-messages [value]="notificationArray" [enableService]="false" [closable]="true" ></p-messages>
            </div> &ndash;&gt; -->
-<div>
+
   <div>
-    <div class="action-bar d-flex justify-content-between align-items-center">
+
       <!-- Left side buttons -->
-      <div class="left-buttons">
-        <p-button
-          type="button"
-          pRipple
-          (click)="addMessages()"
-          label="Show all"
-          [outlined]="true"
-          styleClass="mr-2"/>
-        <p-button
-          type="button"
-          pRipple
-          (click)="clearMessages()"
-          label="Clear all"
-          [outlined]="true"
-          severity="danger"/>
-      </div>
+<!--      <div class="left-buttons">-->
+<!--&lt;!&ndash;        <p-button&ndash;&gt;-->
+<!--&lt;!&ndash;          type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;          pRipple&ndash;&gt;-->
+<!--&lt;!&ndash;          (click)="addMessages()"&ndash;&gt;-->
+<!--&lt;!&ndash;          label="Show all"&ndash;&gt;-->
+<!--&lt;!&ndash;          [outlined]="true"&ndash;&gt;-->
+<!--&lt;!&ndash;          styleClass="mr-2"/>&ndash;&gt;-->
+<!--        <p-button-->
+<!--          type="button"-->
+<!--          pRipple-->
+<!--          (click)="clearMessages()"-->
+<!--          label="Clear all"-->
+<!--          [outlined]="true"-->
+<!--          severity="danger"/>-->
+<!--      </div>-->
 
       <!-- Right side calendar and icon -->
-      <div class="right-controls d-flex align-items-center">
+
+
+<!-- <div class="right-controls d-flex align-items-center">
         <p-calendar
           [(ngModel)]="rangeDates"
           selectionMode="range"
@@ -38,33 +40,71 @@
           (ngModelChange)="onDateRangeChange()"></p-calendar>
         <i class="pi pi-history" style="font-size: 1.3rem; margin-left: 10px" (click)="dateReset()"></i>
       </div>
-    </div>
+</div> -->
 
 
-    <div *ngFor="let notification of filteredNotifications">
-      <p-messages
-        [value]="[notification]"
-        [enableService]="false"
-        [closable]="false"
-        (click)="viewNotification(notification)"
-        class="readnotifications"
-      ></p-messages>
+      <div class="notifications-container">
+        <div *ngFor="let notification of filteredNotifications">
+
+        <div *ngIf="notification.read==true" >
+          <!-- Unread messages -->
+
+          <div class="unread">
+          <p-card (click)="viewNotification(notification)"  styleClass="full-width-card">
+
+            <ng-template pTemplate="header">
+              <span class="icons">
+              <i class="pi pi-phone" style="color: black" *ngIf="notification.sources=='call'"></i>
+              <i class="pi pi-envelope" style="color: black" *ngIf="notification.sources=='email'"></i>
+              <i class="pi pi-comments" style="color: black" *ngIf="notification.sources=='social'"></i>
+            </span>
+              <span class="notification-detail1">{{ notification.detail }}</span>
+            </ng-template>
+
+            <p class="card-content1">{{ notification.data }}</p>
+            <p class="card-content2">{{ notification.summary }}</p>
+          </p-card>
+          </div>
+        </div>
+
+        <!-- Readed Messages -->
+
+        <div class="read">
+        <div *ngIf="notification.read==false">
+          <p-card (click)="viewNotification(notification)" styleClass="full-width-card" >
+
+            <ng-template pTemplate="header">
+              <span class="icons">
+              <i class="pi pi-phone" style="color: black" *ngIf="notification.sources=='call'"></i>
+              <i class="pi pi-envelope" style="color: black" *ngIf="notification.sources=='email'"></i>
+              <i class="pi pi-comments" style="color: black" *ngIf="notification.sources=='social'"></i>
+            </span>
+              <span class="notification-detail2">{{ notification.detail }}</span>
+            </ng-template>
+
+            <p class="card-content3">{{ notification.data }}</p>
+            <p class="card-content4">{{ notification.summary }}</p>
+          </p-card>
+
+        </div>
+        </div>
 
 
-    </div>
+        </div>
+      </div>
 
        <p-dialog
-          header="{{showData[0]}}"
+          header="{{showData[1]}}"
           [(visible)]="visible"
           [modal]="true"
           [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
           [style]="{ width: '50vw' }"
           [draggable]="true"
           [resizable]="true">
-                  <p>{{showData[2]}}</p>
-                  <h6>{{showData[1]}}</h6>
+                  <p>{{showData[0]}}</p>
+                  <h6>{{showData[2]}}</h6>
 
             <!-- <p-button (click)="showDialog()" label="Show" /> -->
       </p-dialog>
   </div>
-</div>
+

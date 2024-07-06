@@ -30,7 +30,7 @@
 
 
 :host ::ng-deep{
-  p-panel{
+  .p-panel{
     height:100%;
 
   }
@@ -39,22 +39,39 @@
   }
   .p-panel-content{
     height:100%;
+    border: none;
+  }
+  .p-panel-header{
+    padding:0;
+
   }
   .p-toggleable-content{
     height:100%
   }
   .chart-header-container {
-
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height:30px;
 
   }
   .p-menubar{
     border:none;
     background: inherit;
   }
+  // .wordCloud{
+  //   height: 100;
+  // }
   angledownicon{
     display:none;
   }
+  .p-menubar p-menubarsub {
+    position: absolute;
+    right: 0;
+  }
+  .p-menubar .p-submenu-list {
+    position: relative;
+    right:0;
+  }
+
 }

@@ -2,8 +2,6 @@ import { Injectable,ViewChild } from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable,Subject } from 'rxjs';
 import {webSocket, WebSocketSubject} from 'rxjs/webSocket';
-import { CookieService } from 'ngx-cookie-service';
-import { AuthendicationService } from './authendication.service';
 import { GridComponent } from '../components/grid/grid.component';
 
 @Injectable({
@@ -18,7 +16,8 @@ export class ChartsService {
   private messagesSubject$ = new Subject<any>();
   public messages$ = this.messagesSubject$.asObservable();
 
-  private baseUrl = 'http://13.201.125.196:8002/charts';
+  private baseUrl = 'http://3.108.225.13:8002/charts';
+  // private baseUrl = 'http://127.0.0.1:8002/charts';
 
   username:any;
 
@@ -70,8 +69,9 @@ export class ChartsService {
     return this.http.get<any>(`${this.baseUrl}/chartData`,{ headers });
   }
 
-  gridDeleted(id:any,token:string): Observable<any>{
+  gridDeleted(id:string,token:string): Observable<any>{
 
+    console.log(id);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
