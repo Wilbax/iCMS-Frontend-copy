@@ -43,7 +43,7 @@
 
               <div class="w-full p-fluid">
                 <p>Special Keywords To Send Notifications</p>
-                <p-chips formControlName="keywords" [disabled]="!notificationsSettingsForm.get('enableKeywordsNotification')?.value || getIsDisabled()"/>
+                <p-chips formControlName="keywords" [disabled]="!notificationsSettingsForm.get('enableKeywordsNotification')?.value || getIsDisabled()" [ngClass]="{'readonly-look': !notificationsSettingsForm.get('enableKeywordsNotification')?.value || getIsDisabled()}"></p-chips>
               </div>
 
             </div>
@@ -54,7 +54,7 @@
 
               <div class="w-full p-fluid mb-10">
                 <p>Topics to categorize calls</p>
-                <p-chips [disabled]="getIsDisabled()" formControlName="topics"/>
+                <p-chips [disabled]="getIsDisabled()" [ngClass]="{'readonly-look': getIsDisabled()}" formControlName="topics"/>
               </div>
 
               <p-divider align="left" type="solid">
@@ -71,7 +71,7 @@
               </div>
               <div class="w-full p-fluid mb-5">
                 <p>Email Notifications Receivers</p>
-                <p-chips formControlName="emails" [disabled]="!notificationsSettingsForm.get('enableEmailNotification')?.value || getIsDisabled()"/>
+                <p-chips formControlName="emails" [disabled]="!notificationsSettingsForm.get('enableEmailNotification')?.value || getIsDisabled()" [ngClass]="{'readonly-look': !notificationsSettingsForm.get('enableKeywordsNotification')?.value || getIsDisabled()}"/>
               </div>
             </div>
           </div>
