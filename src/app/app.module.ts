@@ -14,8 +14,12 @@ import { CalendarModule } from 'primeng/calendar';
 import { DividerModule } from 'primeng/divider';
 import { SharedModule } from './shared/shared.module';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { MessageService } from "primeng/api";
-import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
+import {
+  HttpClientModule,
+  provideHttpClient,
+  withInterceptors,
+} from '@angular/common/http';
 import { MessagesModule } from 'primeng/messages';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
@@ -25,8 +29,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { FormsModule } from '@angular/forms';
 import { MainDashboardModule } from './main-dashboard/main-dashboard.module';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { tokenInterceptor } from "./shared/helpers/token.interceptor";
-
+import { tokenInterceptor } from './shared/helpers/token.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -53,13 +56,12 @@ import { tokenInterceptor } from "./shared/helpers/token.interceptor";
     AvatarGroupModule,
     FormsModule,
     MainDashboardModule,
-    OverlayPanelModule
+    OverlayPanelModule,
   ],
   providers: [
     MessageService,
-    // provideHttpClient(withInterceptors([tokenInterceptor]))
+    provideHttpClient(withInterceptors([tokenInterceptor])),
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}
