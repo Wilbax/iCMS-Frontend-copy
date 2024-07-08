@@ -25,8 +25,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { FormsModule } from '@angular/forms';
 import { MainDashboardModule } from './main-dashboard/main-dashboard.module';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { tokenInterceptor } from "./shared/helpers/token.interceptor";
-
+import { tokenInterceptor } from './shared/helpers/token.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -57,7 +56,7 @@ import { tokenInterceptor } from "./shared/helpers/token.interceptor";
   ],
   providers: [
     MessageService,
-    // provideHttpClient(withInterceptors([tokenInterceptor]))
+    provideHttpClient(withInterceptors([tokenInterceptor]))
   ],
   bootstrap: [AppComponent],
 })

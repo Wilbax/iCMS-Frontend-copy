@@ -33,7 +33,7 @@
       <best-operators-card [isLoading]="isLoadingOperatorRankings" style="width: 54%;" title="Best Operators" [operatorRankings]="operatorRankings"/>
     }
     @if (keywords !== undefined && keywords.length > 0) {
-      <app-wordcloud [isLoading]="isLoadingKeywords" #keywordCloud [words]="keywords" title="Keywords Highlights" />
+      <wordcloud [isLoading]="isLoadingKeywords" #keywordCloud [words]="keywords" title="Keywords Highlights" />
     }
   </div>
 </div>

@@ -44,7 +44,7 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     let permissions = this.tokenStorageService.getStorageKeyValue("permissions");
-    this.isAbleToEdit = permissions.includes("Edit Call Settings");
+    this.isAbleToEdit = permissions.includes("Change Call Settings");
     this.callSettingsService.getNotificationSettings().subscribe(
       (result) => {
         if (result.status) {
