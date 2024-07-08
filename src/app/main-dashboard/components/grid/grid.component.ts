@@ -14,7 +14,6 @@ import {MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 import { AuthenticationService } from '../../../auth/services/authentication.service';
 import { GridsterItemComponentInterface } from 'angular-gridster2';
-import { ChangeDetectorRef,NgZone } from '@angular/core';
 
 interface Product {
   id: number;
@@ -194,12 +193,12 @@ addChart($event: MouseEvent | TouchEvent, item:any): void {
 saveStatus(item:any,status:string){
   this.authService.getIdToken().subscribe((token) =>{
     this.ChartService.saveGridStatus(token,item.id,status).subscribe(
-      response => {
-        // console.log('Grid layout saved successfully:', response);
-      },
-      error => {
-        // console.error('Error saving grid layout:', error);
-      }
+      // response => {
+      //   // console.log('Grid layout saved successfully:', response);
+      // },
+      // error => {
+      //   // console.error('Error saving grid layout:', error);
+      // }
     );
   });
   }
@@ -329,8 +328,8 @@ grid(draggablebool:boolean){
     maxRows: 80,
 
     // min/max item cols/rows
-    maxItemCols: 6,
-    maxItemRows: 6,
+    maxItemCols: 7,
+    maxItemRows: 3,
 
     minItemCols: 3,
     minItemRows: 3,
@@ -419,11 +418,11 @@ widgetsUser(){
           this.widgetGrid = data.map((item: any) => item.grid);
           this.ID = data.map((item: any) => item.id);
           this.status = data.map((item: any) => item.status);
-          
+
           // this.widgetData = this.processWidgetData(this.widgetTitle, this.widgetChart, this.widgetSoucrce);
           const response = this.processGridData(this.widgetTitle, this.widgetChart, this.widgetSoucrce, this.widgetGrid,this.ID,this.topic,this.yAxis,this.xAxis,this.status);
           this.dashboard= response[0].filter((item:any) => item['status'] !== 'hide');
-          
+
           this.gridList = response[0].filter((item:any) => item['status'] !== 'show');
           this.ChartSources=response[1];
         });
@@ -436,7 +435,7 @@ widgetsUser(){
 }
 
   onresize(event: any): void {
-    
+
   }
 
 
@@ -605,7 +604,7 @@ updateCache(changesQueue: { id: string, cols: number, rows: number, x: number, y
 
           const updatedResponse = new Response(JSON.stringify(data));
           cache.put('widgets-data', updatedResponse);
-          
+
         });
       }
     });
