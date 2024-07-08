@@ -283,13 +283,17 @@ export class UsersComponent implements OnInit {
         (data: any) => {
           this.logs = data.reverse();
 
+          // for (let log of this.logs) {
+          //   console.log(log.time);
+          //   let date = new Date(log.time.toString());
+          //   let utcTime = date.getTime();
+          //   let timeZoneOffset = 5.5 * 60 * 60 * 1000; // +5:30 offset in milliseconds
+          //   let localTime = new Date(utcTime + timeZoneOffset);
+          //   log.time = localTime.toLocaleString();
+          // }
           for (let log of this.logs) {
             console.log(log.time);
-            let date = new Date(log.time.toString());
-            let utcTime = date.getTime();
-            let timeZoneOffset = 5.5 * 60 * 60 * 1000; // +5:30 offset in milliseconds
-            let localTime = new Date(utcTime + timeZoneOffset);
-            log.time = localTime.toLocaleString();
+            log.time = new Date(log["time"].toString()).toLocaleString();
           }
 
 
