@@ -22,7 +22,7 @@
             <p class="text-red-500 mt-0" [style.display]="isSubmitted && !descriptionList[i] ? '':'none'">Please enter description.</p>
           <p-dropdown [(ngModel)]="operatorsList[i]" [class]="isSubmitted && !operatorsList[i] ? 'ng-invalid ng-dirty mb-2':'mb-5'" optionValue="operator_id" [options]="callOperators" optionLabel="name" placeholder="Select a call operator*"></p-dropdown>
           <p class="text-red-500 mt-0" [style.display]="isSubmitted && !operatorsList[i] ? '':'none'">Please select an operator.</p>
-          <p-calendar [(ngModel)]="dateList[i]" [showTime]="true" [showIcon]="true" placeholder="Date"></p-calendar>
+          <p-calendar [(ngModel)]="dateList[i]" [showTime]="true" [showIcon]="true" [maxDate]="maxDate" placeholder="Date"></p-calendar>
         </div>
       </ng-template>
 

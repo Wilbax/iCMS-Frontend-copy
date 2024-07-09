@@ -32,7 +32,7 @@ export class FileUploadComponent implements OnInit {
   visible: boolean = false;
   currentLoggedInUserEmail: string = "";
   isAdmin: boolean = false;
-
+  maxDate: Date = new Date();
   constructor(
     private confirmationService: ConfirmationService,
     private callRecordingService: CallRecordingService,

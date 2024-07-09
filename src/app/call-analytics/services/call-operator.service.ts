@@ -16,6 +16,12 @@ export class CallOperatorService {
   public getAllOperators(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.API_ROOT + "/operators");
   }
+  public getOperatorByEmail(operatorEmail: string): Observable<ApiResponse> {
+    console.log("operatorEmail ",operatorEmail);
+    const url = `${this.API_ROOT}/operators-by-email/${operatorEmail}`;
+    return this.http.get<ApiResponse>(url);
+  }
+
 
   public getOperatorDetails(operatorId: number): Promise<ApiResponse> {
     const url = `${this.API_ROOT}/operators/${operatorId}`;
@@ -28,7 +34,7 @@ export class CallOperatorService {
   }
 
   public deleteOperator(operatorId: string): Promise<ApiResponse> {
-    return firstValueFrom(this.http.delete<ApiResponse>(this.API_ROOT + "/operators/" + operatorId));
+    return firstValueFrom(this.http.get<ApiResponse>(this.API_ROOT + "/operators/" + operatorId));
   }
 
   public updateOperator(operator: OperatorListItem): Promise<ApiResponse> {
