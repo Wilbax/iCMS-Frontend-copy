@@ -308,7 +308,7 @@ export class CallOperatorsComponent implements OnInit {
       ) {
         return 'Neutral';
       }
-      return 'Mixed';
+      return 'Neutral';
     }
     return 'Not handled any call yet';
   }
