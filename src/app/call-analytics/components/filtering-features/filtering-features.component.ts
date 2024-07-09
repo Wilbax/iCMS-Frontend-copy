@@ -62,23 +62,35 @@ export class FilteringFeaturesComponent implements OnInit {
         console.log(this.keywords);
 
       }
-
+    
       // Check if duration is null, if so, assign 0
       const duration = this.duration == null || undefined ? 0 : this.duration;
       this.duration = duration
 
       // Check if selectedSentiCatg is null, if so, assign an empty string
       //this.sentimentCatg = this.selectedSentiCatg == null || undefined? '' : this.selectedSentiCatg.name;
-
+    
+      this.sentimentCatg = [];
       if (this.selectedSentiCatg != null) {
         for (let item of this.selectedSentiCatg) {
           this.sentimentCatg.push(item.name);
         }
       }
+      else{
+        this.selectedSentiCatg = [];
+      }
 
       console.log(duration, this.sentimentCatg);
-
-      console.log(this.topics);
+      
+      //new
+      if(this.selectedTopic != null){
+        for (let item of this.selectedTopic) {
+          this.topics.push(item.name);
+        }
+      }
+      else{
+        this.selectedTopic = [];}
+      
 
       // Call applyFeatures method from the service with required parameters
       this.callRecordingService.applyFeatures(duration, this.keywords, this.sentimentCatg, this.start_date, this.end_date, this.selectedTopic)
@@ -123,7 +135,6 @@ export class FilteringFeaturesComponent implements OnInit {
     this.selectedTopic = [];
     this.selectedSentiCatg = [];
     this.keywords = [];
-    this.selectedTopic = [];
     console.log('Fields cleared');
   }
 }
