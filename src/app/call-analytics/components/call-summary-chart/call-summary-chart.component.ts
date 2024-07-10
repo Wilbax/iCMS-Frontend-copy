@@ -67,8 +67,10 @@ export class CallSummaryChartComponent implements OnInit {
     if (this.email) {
       this.callOperatorService.getOperatorByEmail(this.email).subscribe((response) => {
         console.log('Operator ',response.data);
-        this.isOperator = true;
-        this.operatorId = response.data.operator_id;
+        if (response.data === null) {
+          this.isOperator = true;
+          this.operatorId = response.data.operator_id;
+        }
       });
     } else {
       console.log('No email found in localStorage');
