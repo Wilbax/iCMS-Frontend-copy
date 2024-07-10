@@ -34,7 +34,7 @@ export class CallOperatorService {
   }
 
   public deleteOperator(operatorId: string): Promise<ApiResponse> {
-    return firstValueFrom(this.http.get<ApiResponse>(this.API_ROOT + "/operators/" + operatorId));
+    return firstValueFrom(this.http.delete<ApiResponse>(this.API_ROOT + "/operators/" + operatorId));
   }
 
   public updateOperator(operator: OperatorListItem): Promise<ApiResponse> {
