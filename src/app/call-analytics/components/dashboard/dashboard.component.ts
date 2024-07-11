@@ -33,8 +33,8 @@ export class DashboardComponent implements OnInit {
     {label: "Dashboard"}
   ];
 
-  start = "2024-06-29-16-29-00"
-  end = "2024-06-30-18-36-30"
+  start = this.formatDate(new Date(), "end");
+  end = this.formatDate(new Date(new Date().setMonth(new Date().getMonth() - 1)), "start");
   isLoadingStatistics = true;
   isLoadingPercentages = true;
   isLoadingSentimentsOverTime = true;
@@ -55,6 +55,7 @@ export class DashboardComponent implements OnInit {
     this.callAnalyticsService.getAllKeywords(this.start, this.end).then(response => {
       this.keywords = Object.entries(response.data).map(([word, weight]) => (
         {word: word, weight: Number(weight)}));
+      if (this.keywordCloud) this.keywordCloud.refreshChart(this.keywords);
       this.isLoadingKeywords = false;
     }).catch(err => {
       console.log(err);

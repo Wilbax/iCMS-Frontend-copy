@@ -17,7 +17,7 @@
       <line-area-chart [isLoading]="isLoadingSentimentsOverTime" #lChartComp [dataset]="sentimentOverTime" title="Sentiment Over Time"/>
     }
     @if (callSentiments !== undefined) {
-      <doughnut-chart [isLoading]="isLoadingPercentages" #dChartComp title="Sentiment Distribution" [percentages]="[callSentiments.negative, callSentiments.positive, callSentiments.neutral]"/>
+      <doughnut-chart [isLoading]="isLoadingPercentages" #dChartComp title="Sentiment Distribution" [percentages]="[callSentiments.positive, callSentiments.negative, callSentiments.neutral]"/>
     }
   </div>
   <div class="flex gap-6 flex-wrap">
