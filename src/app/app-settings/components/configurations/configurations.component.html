@@ -70,7 +70,6 @@
                 <div *ngFor="let rule of rules" class="permission-item pt-2">
                   <div *ngIf="isNumber(rule.value);">
                     <label> {{rule.name}}</label>
-
                     <p-inputNumber inputId="integeronly" [(ngModel)]="rule.value"></p-inputNumber>
                   </div>
                 </div>
