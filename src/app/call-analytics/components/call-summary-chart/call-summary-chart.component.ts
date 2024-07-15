@@ -67,7 +67,7 @@ export class CallSummaryChartComponent implements OnInit {
     if (this.email) {
       this.callOperatorService.getOperatorByEmail(this.email).subscribe((response) => {
         console.log('Operator ',response.data);
-        if (response.data != null) {
+        if (response.data && Object.keys(response.data).length > 0) {
           this.isOperator = true;
           this.operatorId = response.data.operator_id;
         }
@@ -83,7 +83,6 @@ export class CallSummaryChartComponent implements OnInit {
           if (data.data.length === 0) {
             this.noData = true;
           } else {
-            this.noData = false;
             this.callRecordings = data.data.map((record: any) => {
               console.log(record);
               return {
@@ -103,6 +102,15 @@ export class CallSummaryChartComponent implements OnInit {
             // If the user is an operator, filter the call recordings by operator ID
             if (this.isOperator) {
               this.callRecordings = this.callRecordings.filter(record => record.operator_id === this.operatorId);
+              if(this.callRecordings.length > 0) {
+                this.noData = false
+              }
+              else {
+                this.noData = true
+              }
+            }
+            else {
+              this.noData = false;
             }
 
           }

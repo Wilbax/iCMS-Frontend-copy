@@ -16,6 +16,7 @@ export class SettingsComponent implements OnInit {
   notificationsSettingsForm: FormGroup;
   callSettingsDetails!: CallSettingsDetails;
   isAbleToEdit: boolean = false;
+  loading = false;
 
   breadcrumbItems: MenuItem[] = [
     {label: 'Call Analytics', routerLink: '/call/dashboard'},
@@ -144,6 +145,7 @@ export class SettingsComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.loading = true
     const formValue = this.notificationsSettingsForm.value;
     this.callSettingsDetails.alert_keywords =  formValue.keywords === undefined ? [] : formValue.keywords;
     this.callSettingsDetails.alert_email_receptions = formValue.emails  === undefined ? [] : formValue.emails;
@@ -162,13 +164,17 @@ export class SettingsComponent implements OnInit {
       .then((response) => {
         if (response.status) {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: UserMessages.SAVED_SUCCESS });
+          this.loading = false
         } else {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: UserMessages.SAVED_ERROR });
+          this.loading = false
         }
       })
       .catch((error) => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: UserMessages.SAVED_ERROR });
+        this.loading = false
         console.log(error);
       });
+
   }
 }

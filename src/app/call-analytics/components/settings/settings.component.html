@@ -77,7 +77,7 @@
           </div>
           @if (isAbleToEdit) {
             <div class="flex justify-end px-10 py-5">
-              <button pButton pRipple label="Update Settings" class="p-button-primary"></button>
+              <p-button  label="Update Settings"  [loading]="loading" (onClick)="onSubmit()" pAutoFocus></p-button>
             </div>
           }
         </form>
