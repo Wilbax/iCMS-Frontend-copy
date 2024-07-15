@@ -145,48 +145,29 @@ export class SettingsComponent implements OnInit {
 
   onSubmit(): void {
     const formValue = this.notificationsSettingsForm.value;
-    (this.callSettingsDetails.alert_keywords =
-      formValue.keywords === undefined ? [] : formValue.keywords),
-      (this.callSettingsDetails.alert_email_receptions = formValue.emails),
-      (this.callSettingsDetails.sentiment_lower_threshold =
-        formValue.bellowScore || 0),
-      (this.callSettingsDetails.sentiment_upper_threshold =
-        formValue.aboveScore || 10),
-      (this.callSettingsDetails.is_upper_threshold_enabled =
-        formValue.aboveNotify),
-      (this.callSettingsDetails.is_lower_threshold_enabled =
-        formValue.bellowNotify),
-      (this.callSettingsDetails.is_email_alerts_enabled =
-        formValue.enableEmailNotification),
-      (this.callSettingsDetails.is_push_notifications_enabled =
-        formValue.enablePushNotification),
-      (this.callSettingsDetails.is_keyword_alerts_enabled =
-        formValue.enableKeywordsNotification),
-      (this.callSettingsDetails.topics = formValue.topics);
+    this.callSettingsDetails.alert_keywords =  formValue.keywords === undefined ? [] : formValue.keywords;
+    this.callSettingsDetails.alert_email_receptions = formValue.emails  === undefined ? [] : formValue.emails;
+    this.callSettingsDetails.sentiment_lower_threshold = formValue.bellowScore || 0;
+    this.callSettingsDetails.sentiment_upper_threshold = formValue.aboveScore || 10;
+    this.callSettingsDetails.is_upper_threshold_enabled = formValue.aboveNotify;
+    this.callSettingsDetails.is_lower_threshold_enabled = formValue.bellowNotify;
+    this.callSettingsDetails.is_email_alerts_enabled = formValue.enableEmailNotification;
+    this.callSettingsDetails.is_push_notifications_enabled = formValue.enablePushNotification;
+    this.callSettingsDetails.is_keyword_alerts_enabled = formValue.enableKeywordsNotification;
+    this.callSettingsDetails.topics = formValue.topics;
     console.log(this.callSettingsDetails);
+
     this.callSettingsService
       .updateNotificationSettings(this.callSettingsDetails)
       .then((response) => {
         if (response.status) {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: UserMessages.SAVED_SUCCESS,
-          });
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: UserMessages.SAVED_SUCCESS });
         } else {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: UserMessages.SAVED_ERROR,
-          });
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: UserMessages.SAVED_ERROR });
         }
       })
       .catch((error) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: UserMessages.SAVED_ERROR,
-        });
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: UserMessages.SAVED_ERROR });
         console.log(error);
       });
   }

@@ -82,8 +82,8 @@
     Are you sure you want to delete call operator {{ selectedOperator.name }}?
   </p>
   <div class="justify-end flex gap-5">
-    <p-button label="No" (click)="isConfirmModalVisible = false" [text]="true"></p-button>
-    <p-button label="Yes" (click)="onConfirmDelete()" styleClass="p-button-danger"></p-button>
+    <p-button label="No" [disabled]="isDataSaving" (click)="isConfirmModalVisible = false" [text]="true"></p-button>
+    <p-button label="Yes" [loading]="isDataSaving" (click)="onConfirmDelete()" styleClass="p-button-danger"></p-button>
   </div>
 </p-dialog>
 
@@ -118,8 +118,8 @@
     </div>
   </form>
   <ng-template pTemplate="footer">
-    <p-button (click)="onClickSave()" label="Save" pAutoFocus></p-button>
-    <p-button (click)="isModelVisible = false" label="Cancel" severity="secondary" [text]="true"></p-button>
+    <p-button (click)="onClickSave()" [loading]="isDataSaving" label="Save" pAutoFocus></p-button>
+    <p-button (click)="isModelVisible = false" [disabled]="isDataSaving" label="Cancel" severity="secondary" [text]="true"></p-button>
   </ng-template>
 </p-dialog>
 
