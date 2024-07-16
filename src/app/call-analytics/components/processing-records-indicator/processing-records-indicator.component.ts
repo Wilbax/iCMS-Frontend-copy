@@ -1,7 +1,5 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CallRecordingService} from "../../services/call-recording.service";
-import {Subscription} from "rxjs";
-import {AuthenticationService} from "../../../auth/services/authentication.service";
 
 @Component({
   selector: 'app-processing-records-indicator',
@@ -11,22 +9,22 @@ import {AuthenticationService} from "../../../auth/services/authentication.servi
 export class ProcessingRecordsIndicatorComponent implements OnInit {
   pendingCallData: any = [];
   isLoading: boolean = true;
-  data: number = 0;
-  private sseSubscription: Subscription | undefined;
-  private callsSubscription: Subscription | undefined;
 
   constructor(
     private callRecordingService: CallRecordingService) {
   }
   ngOnInit() {
     this.reloadDataSource();
-    this.sseSubscription = this.callRecordingService.getServerSentEvent()
+    this.callRecordingService.getServerSentEvent()
       .subscribe(
         data => {
-          this.data = data;
-          console.log("test", this.data);
-          if(this.pendingCallData.length > this.data){
+          console.log("test", data);
+          let pendingListFromString = JSON.parse(data);
+          console.log("List", pendingListFromString);
+          if(pendingListFromString.length == 0 && this.pendingCallData.length > 0){
             location.reload();
+          } else {
+            this.pendingCallData = pendingListFromString;
           }
         },
         err => console.error('Error receiving SSE:', err)
