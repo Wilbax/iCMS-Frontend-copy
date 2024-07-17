@@ -10,9 +10,7 @@ export class ProcessingRecordsIndicatorComponent implements OnInit {
   pendingCallData: any = [];
   isLoading: boolean = true;
 
-  constructor(
-    private callRecordingService: CallRecordingService) {
-  }
+  constructor(private callRecordingService: CallRecordingService) {  }
   ngOnInit() {
     this.reloadDataSource();
     this.callRecordingService.getServerSentEvent()
@@ -29,8 +27,8 @@ export class ProcessingRecordsIndicatorComponent implements OnInit {
         },
         err => console.error('Error receiving SSE:', err)
       );
-
   }
+
   reloadDataSource(): void {
     try {
       this.isLoading = true;

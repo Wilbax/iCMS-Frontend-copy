@@ -33,6 +33,7 @@ export class FileUploadComponent implements OnInit {
   currentLoggedInUserEmail: string = "";
   isAdmin: boolean = false;
   maxDate: Date = new Date();
+  uploadFeedbackMsg: string = 'Upload started. Please wait...';
   constructor(
     private confirmationService: ConfirmationService,
     private callRecordingService: CallRecordingService,
@@ -57,6 +58,7 @@ export class FileUploadComponent implements OnInit {
   }
 
   onUploadClick(event: any): void {
+    this.visible = true;
     this.files = event.files;
     if (this.files && this.files.length > 0) {
       let queuedFiles = this.createUploadQueue(this.files);
@@ -65,8 +67,9 @@ export class FileUploadComponent implements OnInit {
         .then((response) => {
           this.clearFiles();
           if (response!.status) {
-            this.visible = true;
+            this.uploadFeedbackMsg = "Your calls have been added for analyze. This process will take some time. When analysis completed you will be notified.";
           } else {
+            this.visible = false;
             this.messageService.add({
               severity: 'error',
               summary: 'Error',
