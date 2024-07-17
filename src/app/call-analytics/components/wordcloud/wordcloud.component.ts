@@ -21,17 +21,22 @@ export class WordcloudComponent implements OnInit {
     $("#wordCloud").jQWCloud({
       words: wordList,
       maxFont: 50,
-      minFont:10,
+      minFont: 10,
       verticalEnabled: true,
       padding_left: null,
-      word_click :function(event: any){
+      word_click: function (event: any) {
         console.log(event.target.textContent);
       },
-      word_mouseOver :function(){},
-      word_mouseEnter :function(){},
-      word_mouseOut :function(){},
-      beforeCloudRender:function(){},
-      afterCloudRender:function(){}
+      word_mouseOver: function () {
+      },
+      word_mouseEnter: function () {
+      },
+      word_mouseOut: function () {
+      },
+      beforeCloudRender: function () {
+      },
+      afterCloudRender: function () {
+      }
     });
   }
 }

@@ -17,9 +17,9 @@ export class FileUploadComponent implements OnInit {
   @ViewChild('callUpload') callUpload!: FileUpload;
 
   breadcrumbItems: MenuItem[] = [
-    { label: 'Call Analytics', routerLink: '/call/dashboard' },
-    { label: 'Call Recordings', routerLink: '/call/recordings' },
-    { label: 'Upload Calls' },
+    {label: 'Call Analytics', routerLink: '/call/dashboard'},
+    {label: 'Call Recordings', routerLink: '/call/recordings'},
+    {label: 'Upload Calls'},
   ];
 
   files: any[] = [];
@@ -34,13 +34,15 @@ export class FileUploadComponent implements OnInit {
   isAdmin: boolean = false;
   maxDate: Date = new Date();
   uploadFeedbackMsg: string = 'Upload started. Please wait...';
+
   constructor(
     private confirmationService: ConfirmationService,
     private callRecordingService: CallRecordingService,
     private callOperatorService: CallOperatorService,
     private messageService: MessageService,
     private tokenStorageService: TokenStorageService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     let permissionsList = JSON.parse(this.tokenStorageService.getStorageKeyValue("permissions"));

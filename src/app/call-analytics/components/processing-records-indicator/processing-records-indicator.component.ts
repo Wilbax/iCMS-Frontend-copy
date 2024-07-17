@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {CallRecordingService} from "../../services/call-recording.service";
+import { Component, OnInit } from '@angular/core';
+import { CallRecordingService } from "../../services/call-recording.service";
 
 @Component({
   selector: 'app-processing-records-indicator',
@@ -10,7 +10,9 @@ export class ProcessingRecordsIndicatorComponent implements OnInit {
   pendingCallData: any = [];
   isLoading: boolean = true;
 
-  constructor(private callRecordingService: CallRecordingService) {  }
+  constructor(private callRecordingService: CallRecordingService) {
+  }
+
   ngOnInit() {
     this.reloadDataSource();
     this.callRecordingService.getServerSentEvent()
@@ -19,7 +21,7 @@ export class ProcessingRecordsIndicatorComponent implements OnInit {
           console.log("test", data);
           let pendingListFromString = JSON.parse(data);
           console.log("List", pendingListFromString);
-          if(pendingListFromString.length == 0 && this.pendingCallData.length > 0){
+          if (pendingListFromString.length == 0 && this.pendingCallData.length > 0) {
             location.reload();
           } else {
             this.pendingCallData = pendingListFromString;

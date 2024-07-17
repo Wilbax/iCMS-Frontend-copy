@@ -49,12 +49,14 @@ export class CallOperatorsComponent implements OnInit {
   data: any;
   isDataSaving: boolean = false;
   options: any;
+  protected readonly delay = delay;
 
   constructor(
     private callOperatorService: CallOperatorService,
     private messageService: MessageService,
     private tokenStorageService: TokenStorageService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     let permissions = this.tokenStorageService.getStorageKeyValue("permissions");
@@ -338,7 +340,8 @@ export class CallOperatorsComponent implements OnInit {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => {});
+      .finally(() => {
+      });
 
     this.callOperatorService.getAllOperators().subscribe(
       (result) => {
@@ -391,6 +394,4 @@ export class CallOperatorsComponent implements OnInit {
     }
     return '';
   }
-
-  protected readonly delay = delay;
 }

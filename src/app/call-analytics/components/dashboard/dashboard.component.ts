@@ -29,8 +29,8 @@ export class DashboardComponent implements OnInit {
   @ViewChild('keywordCloud') keywordCloud!: WordcloudComponent;
 
   breadcrumbItems: MenuItem[] = [
-    {label: "Call Analytics"},
-    {label: "Dashboard"}
+    { label: "Call Analytics" },
+    { label: "Dashboard" }
   ];
 
   start = this.formatDate(new Date(), "end");
@@ -50,11 +50,13 @@ export class DashboardComponent implements OnInit {
   topicDistribution!: { [KeyFilter: string]: number }
   keywords: WordCloudItem[] = []
   protected readonly Math = Math;
+  protected readonly parseInt = parseInt;
+  protected readonly parseFloat = parseFloat;
 
   constructor(private callAnalyticsService: CallAnalyticsService, private cdr: ChangeDetectorRef) {
     this.callAnalyticsService.getAllKeywords(this.start, this.end).then(response => {
       this.keywords = Object.entries(response.data).map(([word, weight]) => (
-        {word: word, weight: Number(weight)}));
+        { word: word, weight: Number(weight) }));
       if (this.keywordCloud) this.keywordCloud.refreshChart(this.keywords);
       this.isLoadingKeywords = false;
     }).catch(err => {
@@ -70,7 +72,7 @@ export class DashboardComponent implements OnInit {
   }
 
   formatDate(date: Date, type: "start" | "end" = "start"): string {
-    const pad = (num:any) => num.toString().padStart(2, '0');
+    const pad = (num: any) => num.toString().padStart(2, '0');
 
     const year = date.getFullYear();
     const month = pad(date.getMonth() + 1); // getMonth() is zero-indexed
@@ -138,7 +140,7 @@ export class DashboardComponent implements OnInit {
     });
 
     this.callAnalyticsService.getAllKeywords(start, end).then(response => {
-      this.keywords = Object.entries(response.data).map(([word, weight]) => ({word: word, weight: Number(weight)}));
+      this.keywords = Object.entries(response.data).map(([word, weight]) => ({ word: word, weight: Number(weight) }));
       if (this.keywordCloud) this.keywordCloud.refreshChart(this.keywords);
       this.isLoadingKeywords = false;
     }).catch(err => {
@@ -146,7 +148,4 @@ export class DashboardComponent implements OnInit {
     }).finally(() => {
     });
   }
-
-  protected readonly parseInt = parseInt;
-  protected readonly parseFloat = parseFloat;
 }

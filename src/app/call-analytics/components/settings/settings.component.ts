@@ -19,8 +19,8 @@ export class SettingsComponent implements OnInit {
   loading = false;
 
   breadcrumbItems: MenuItem[] = [
-    {label: 'Call Analytics', routerLink: '/call/dashboard'},
-    {label: 'Settings'},
+    { label: 'Call Analytics', routerLink: '/call/dashboard' },
+    { label: 'Settings' },
   ];
 
   constructor(
@@ -147,8 +147,8 @@ export class SettingsComponent implements OnInit {
   onSubmit(): void {
     this.loading = true
     const formValue = this.notificationsSettingsForm.value;
-    this.callSettingsDetails.alert_keywords =  formValue.keywords === undefined ? [] : formValue.keywords;
-    this.callSettingsDetails.alert_email_receptions = formValue.emails  === undefined ? [] : formValue.emails;
+    this.callSettingsDetails.alert_keywords = formValue.keywords === undefined ? [] : formValue.keywords;
+    this.callSettingsDetails.alert_email_receptions = formValue.emails === undefined ? [] : formValue.emails;
     this.callSettingsDetails.sentiment_lower_threshold = formValue.bellowScore || 0;
     this.callSettingsDetails.sentiment_upper_threshold = formValue.aboveScore || 10;
     this.callSettingsDetails.is_upper_threshold_enabled = formValue.aboveNotify;

@@ -6,7 +6,7 @@ import userMessages from "../../../shared/user-messages";
 import UserMessages from "../../../shared/user-messages";
 import { MessageService } from "primeng/api";
 import { TokenStorageService } from "../../../shared/shared-services/token-storage.service";
-import {CallOperatorService} from "../../services/call-operator.service";
+import { CallOperatorService } from "../../services/call-operator.service";
 
 @Component({
   selector: 'app-call-summary-chart',
@@ -26,15 +26,15 @@ export class CallSummaryChartComponent implements OnInit {
   audioPosition: any;
   currentTime: any;
   totalTime: any;
-  email:any;
+  email: any;
   selectedCallSummary: string = "";
   isError: boolean = false;
   isLoading: boolean = true;
   noData: boolean = false;
-  protected readonly userMessages = userMessages;
   isAbleToDelete: boolean = false;
   isOperator: boolean = false
   operatorId: any;
+  protected readonly userMessages = userMessages;
 
   constructor(
     private callRecordingService: CallRecordingService,
@@ -66,7 +66,7 @@ export class CallSummaryChartComponent implements OnInit {
   reloadDataSource(): void {
     if (this.email) {
       this.callOperatorService.getOperatorByEmail(this.email).subscribe((response) => {
-        console.log('Operator ',response.data);
+        console.log('Operator ', response.data);
         if (response.data && Object.keys(response.data).length > 0) {
           this.isOperator = true;
           this.operatorId = response.data.operator_id;
@@ -102,28 +102,26 @@ export class CallSummaryChartComponent implements OnInit {
             // If the user is an operator, filter the call recordings by operator ID
             if (this.isOperator) {
               this.callRecordings = this.callRecordings.filter(record => record.operator_id === this.operatorId);
-              if(this.callRecordings.length > 0) {
+              if (this.callRecordings.length > 0) {
                 this.noData = false
-              }
-              else {
+              } else {
                 this.noData = true
               }
-            }
-            else {
+            } else {
               this.noData = false;
             }
 
           }
         } else {
           this.isError = true;
-          this.messageService.add({severity: "error", summary: "Error", detail: UserMessages.FETCH_ERROR});
+          this.messageService.add({ severity: "error", summary: "Error", detail: UserMessages.FETCH_ERROR });
         }
         this.isLoading = false;
       }, (error) => {
         console.error('Error fetching call recordings', error);
         this.isError = true;
         this.isLoading = false;
-        this.messageService.add({severity: "error", summary: "Error", detail: UserMessages.FETCH_ERROR});
+        this.messageService.add({ severity: "error", summary: "Error", detail: UserMessages.FETCH_ERROR });
       });
     } catch (error) {
       console.error('Error fetching recordings', error);
