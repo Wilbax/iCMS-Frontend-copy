@@ -33,8 +33,8 @@ export class DashboardComponent implements OnInit {
     { label: "Dashboard" }
   ];
 
-  start = this.formatDate(new Date(), "end");
-  end = this.formatDate(new Date(new Date().setMonth(new Date().getMonth() - 1)), "start");
+  start = this.formatDate(new Date(new Date().setMonth(new Date().getMonth() - 1)), "start");
+  end = this.formatDate(new Date(), "end");
   isLoadingStatistics = true;
   isLoadingPercentages = true;
   isLoadingSentimentsOverTime = true;
